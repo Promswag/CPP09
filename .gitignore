@@ -1,0 +1,7 @@
+.DS_Store
+.vscode
+*.dSYM
+obj
+a.out
+btc
+data.csv
