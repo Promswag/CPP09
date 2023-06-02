@@ -3,7 +3,8 @@ INC_DIR			= ./include/
 SRC_DIR			= ./src/
 OUT_DIR			= ./obj/
 
-SRC				= 	main.cpp
+SRC				= 	main.cpp \
+					BitcoinExchange.cpp
 
 SRCC			= ${addprefix ${SRC_DIR}, ${SRC}}
 OBJS			= ${SRCC:%.cpp=${OUT_DIR}%.o}
@@ -11,7 +12,7 @@ INCLUDE			= -I${INC_DIR}
 
 CC				= c++
 CFLAGS			= -g -std=c++98 -Wall -Wextra
-CFLAGS			+= -Werror
+# CFLAGS			+= -Werror
 CFLAGS			+= -fsanitize=address
 MKDIR			= mkdir -p
 RM				= rm -rf

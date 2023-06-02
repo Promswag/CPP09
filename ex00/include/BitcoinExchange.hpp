@@ -8,8 +8,8 @@
 class BitcoinExchange {
 private:
 	std::map<std::string, double> _entries;
-	bool _date_is_valid(std::string date);
-	bool _date_is_valid(std::string value);
+	bool _date_is_valid(std::string date) const;
+	bool _value_is_valid(std::string value) const;
 public:
 	BitcoinExchange();
 	BitcoinExchange(std::ifstream &file);
@@ -17,7 +17,7 @@ public:
 	BitcoinExchange& operator=(const BitcoinExchange &o);
 	~BitcoinExchange();
 
-	void parse(std::ifstream &file) const;
+	void parse(std::string &line) const;
 };
 
 #endif

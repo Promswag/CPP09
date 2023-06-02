@@ -13,16 +13,19 @@ int main(int argc, char **argv)
 	std::ifstream database;
 	std::ifstream input;
 
-	database.open("data.csv");
+	database.open("src/data.csv");
 	input.open(argv[1]);
-	if (!database.good() || !input.good())
+	if (!database.is_open() || !input.is_open())
 	{
-		std::cout << "Error parsing file" << std::endl;
+		std::cout << "Error loading file" << std::endl;
 		return (0);
 	}
 
 	BitcoinExchange btc(database);
-	btc.process(input);
-	
+
+	std::string line;
+	getline(input, line);
+	while (input.good() && getline(input, line))
+		btc.parse(line);
 	return (0);
 }
