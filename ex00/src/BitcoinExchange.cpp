@@ -4,25 +4,9 @@
 #include <regex>
 #include <map>
 
-bool BitcoinExchange::_date_is_valid(std::string date) const
-{
-	struct tm tm;
-	if (!strptime(date.c_str(), "%Y-%m-%d", &tm) || tm.tm_mday == 0)
-		return false;
-	return true;
-}
+BitcoinExchange::BitcoinExchange() {}
 
-bool BitcoinExchange::_value_is_valid(std::string value) const
-{
-	return regex_match(value, std::regex("^\\d+(\\.\\d+)?$"));
-}
-
-BitcoinExchange::BitcoinExchange()
-{
-}
-
-BitcoinExchange::BitcoinExchange(std::ifstream &file)
-{
+BitcoinExchange::BitcoinExchange(std::ifstream &file) {
 	std::string line, date, value;
 	std::getline(file, line);
 	while (file.good() && std::getline(file, line))
@@ -36,21 +20,29 @@ BitcoinExchange::BitcoinExchange(std::ifstream &file)
 	}
 }
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &o)
-{
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &o) : _entries(o._entries) {}
 
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &o) {
+	if (this == &o)
+		return *this;
+	_entries = o._entries;
+	return *this;
 }
 
-BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &o)
-{
+BitcoinExchange::~BitcoinExchange() {}
+
+bool BitcoinExchange::_date_is_valid(std::string date) const {
+	struct tm tm;
+	if (!strptime(date.c_str(), "%Y-%m-%d", &tm) || tm.tm_mday == 0)
+		return false;
+	return true;
 }
 
-BitcoinExchange::~BitcoinExchange()
-{
+bool BitcoinExchange::_value_is_valid(std::string value) const {
+	return regex_match(value, std::regex("^\\d+(\\.\\d+)?$"));
 }
 
-void BitcoinExchange::parse(std::string &line) const
-{
+void BitcoinExchange::parse(std::string &line) const {
 	std::string date, value;
 	try {
 		date = line.substr(0, line.find_first_of("|"));
@@ -72,7 +64,8 @@ void BitcoinExchange::parse(std::string &line) const
 		else
 		{
 			std::map<std::string, double>::const_iterator it = _entries.upper_bound(date);
-			it--;
+			if (it != _entries.begin())
+				it--;
 			std::cout << line << " => " << val *  it->second << std::endl;
 		}
 	}

@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	std::ifstream database;
 	std::ifstream input;
 
-	database.open("src/data.csv");
+	database.open("data.csv");
 	input.open(argv[1]);
 	if (!database.is_open() || !input.is_open())
 	{

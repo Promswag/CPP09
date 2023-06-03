@@ -1,10 +1,10 @@
-NAME			= btc
+NAME			= RPN
 INC_DIR			= ./include/
 SRC_DIR			= ./src/
 OUT_DIR			= ./obj/
 
 SRC				= 	main.cpp \
-					BitcoinExchange.cpp
+					RPN.cpp
 
 SRCC			= ${addprefix ${SRC_DIR}, ${SRC}}
 OBJS			= ${SRCC:%.cpp=${OUT_DIR}%.o}
