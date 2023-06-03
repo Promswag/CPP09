@@ -1,10 +1,10 @@
-NAME			= PMergeMe
+NAME			= PmergeMe
 INC_DIR			= ./include/
 SRC_DIR			= ./src/
 OUT_DIR			= ./obj/
 
 SRC				= 	main.cpp \
-					PMergeMe.cpp
+					PmergeMe.cpp
 
 SRCC			= ${addprefix ${SRC_DIR}, ${SRC}}
 OBJS			= ${SRCC:%.cpp=${OUT_DIR}%.o}
