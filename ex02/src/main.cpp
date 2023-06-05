@@ -42,6 +42,11 @@ int main(int argc, char **argv)
 		std::cout << "Bad arguments -> ./PmergeMe list_of_positive_integers" << std::endl;
 		return (0);
 	}
-	PmergeMe me(argc - 1, argv + 1);
+	try {
+		PmergeMe me(argc - 1, argv + 1);
+		me.pmergeme();
+	} catch (std::exception &e) {
+		std::cout << e.what() << std::endl;
+	}	
 	return (0);
 }

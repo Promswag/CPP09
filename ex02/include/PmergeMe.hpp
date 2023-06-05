@@ -14,6 +14,7 @@ public:
 	PmergeMe& operator=(const PmergeMe &o);
 	~PmergeMe();
 
+	void pmergeme();
 	std::vector<unsigned int> sort_vector(
 		std::vector<unsigned int>::iterator begin,
 		std::vector<unsigned int>::iterator end);
