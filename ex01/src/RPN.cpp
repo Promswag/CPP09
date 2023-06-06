@@ -13,8 +13,10 @@ RPN::RPN(std::string &line) {
 	while (it != _str.end()) {
 		if (*it != ' ') {
 			c = *it;
-			if (!regex_match(c, std::regex("^[0-9]|[\\+-/\\*]$")))
+			if (!regex_match(c, std::regex("^[0-9]|[\\+-/\\*]$"))) {
+				std::cout << "Error" << std::endl;
 				throw std::invalid_argument("RPN::InvalidArgument");
+			}
 		}
 		it++;
 	}

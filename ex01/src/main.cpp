@@ -10,7 +10,9 @@ int main(int argc, char **argv)
 	}
 
 	std::string input(argv[1]);
-	RPN rpn(input);
-	rpn.solution();
+	try {
+		RPN rpn(input);
+		rpn.solution();
+	} catch (...) { return (1); }
 	return (0);
 }

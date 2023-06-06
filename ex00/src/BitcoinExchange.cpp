@@ -13,9 +13,10 @@ BitcoinExchange::BitcoinExchange(std::ifstream &file) {
 	{
 		date = line.substr(0, line.find_first_of(","));
 		value = line.substr(line.find_first_of(",") + 1);
-		if (!_date_is_valid(date) || !_value_is_valid(value))
+		if (!_date_is_valid(date) || !_value_is_valid(value)) {
 			std::cout << "Error while reading data, invalid format" << std::endl;
-		else
+			throw "";
+		}
 			_entries[date] = std::stod(value);
 	}
 }
@@ -32,10 +33,31 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &o) {
 BitcoinExchange::~BitcoinExchange() {}
 
 bool BitcoinExchange::_date_is_valid(std::string date) const {
-	struct tm tm;
-	if (!strptime(date.c_str(), "%Y-%m-%d", &tm) || tm.tm_mday == 0)
-		return false;
-	return true;
+	int d, m, y;
+	try {
+		y = std::stoi(date.substr(0, date.find_first_of('-')));
+		m = std::stoi(date.substr(date.find_first_of('-') + 1, date.find_last_of('-')));
+		d = std::stoi(date.substr(date.find_last_of('-') + 1));
+	} catch (...) { return false; }
+	if ((m == 1 || m == 3 || m == 5|| m == 7|| m == 8||m == 10||m == 12) && d > 0 && d <= 31)
+		return true;
+	else {
+		if ((m == 4 || m == 6 || m == 9 || m == 11) && d > 0 && d <= 30)
+			return true;
+		else {
+			if (m == 2) {
+				if ((y % 400 == 0 || (y % 100 != 0 && y % 4 == 0)) && d > 0 && d <= 29)
+					return true;
+				else if(d > 0 && d <= 28)
+					return true;
+				else
+					return false;
+			}
+			else
+				return false;
+		}
+	}
+	return false;
 }
 
 bool BitcoinExchange::_value_is_valid(std::string value) const {
@@ -47,8 +69,7 @@ void BitcoinExchange::parse(std::string &line) const {
 	try {
 		date = line.substr(0, line.find_first_of("|"));
 		value = line.substr(line.find_first_of("|") + 2);
-	} catch (std::exception &e) {}
-
+	} catch (...) {}
 	if (!_date_is_valid(date))
 		std::cout << "Error: bad input => " << line << std::endl;
 	else
